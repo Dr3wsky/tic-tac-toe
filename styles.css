@@ -1,0 +1,295 @@
+/* CSS Reset, Globals and Custom Fonts */
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --white: rgb(255, 255, 255);
+  --light-grey: rgb(230, 228, 228);
+  --dark-grey: rgba(150, 150, 150, 0.91);
+  --black: rgb(0, 0, 0);
+  --blue-steel: rgb(52, 214, 220);
+  --green: rgb(98, 228, 65);
+  --red: rgb(249, 55, 55);
+  --shadow: rgba(0, 0, 0, 0.218) 0px 1px 4px;
+  --btn-shadow: var(--blue-steel) 6px 6px 6px;
+  --border-radius: 6px;
+  --container-width: 1600px;
+  --spacing-xs: 1rem;
+  --spacing-s: 2rem;
+  --spacing-m: 3rem;
+  --spacing-l: 6rem;
+  --spacing-xl: 10rem;
+  --primary-font: Hack;
+  --secondary-font: Philosopher;
+  --title-font: Texas Tango;
+}
+
+@font-face {
+  font-family: Philosopher;
+  src: url("fonts/Philosopher.woff2") format("woff2"),
+    url("fonts/Philosopher.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Texas Tango;
+  src: url("fonts/TexasTangoBOLDPERSONALUSE.woff2") format("woff2"),
+    url("fonts/TexasTangoBOLDPERSONALUSE.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Hack;
+  src: url("fonts/Hack-Regular.woff2") format("woff2"),
+    url("fonts/Hack-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  /* footer support */
+  position: relative;
+  min-height: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--light-grey);
+  color: var(--black);
+  font-family: Hack, Philosopher, "Lucida", "Roboto";
+  font-size: 1rem;
+  word-wrap: break-word;
+  /* footer support */
+  margin-bottom: 100px;
+}
+
+/* Utilities */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.btn {
+  font-size: 1.15rem;
+  font-weight: 600;
+  background-color: var(--light-grey);
+  border-radius: var(--border-radius);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-s);
+  transition: transform 0.1s ease-in-out;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.9);
+}
+
+/* HEADER Styling */
+.header {
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.container {
+  padding: var(--spacing-m);
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-login:hover {
+  box-shadow: var(--btn-shadow);
+  background-color: var(--dark-grey);
+  color: var(--blue-steel);
+}
+
+/* MAIN */
+
+.main {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: var(--spacing-s);
+}
+
+.btn-add {
+  font-size: 1.5rem;
+}
+
+.btn-add:hover {
+  background-color: var(--blue-steel);
+  color: var(--light-grey);
+}
+
+.books-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-m);
+  padding-top: var(--spacing-s);
+}
+
+.book-card {
+  background-color: var(--blue-steel);
+  border: 2px solid var(--light-grey);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-xs);
+}
+
+.book-info {
+  margin-top: var(--spacing-xs);
+}
+
+.btn-read {
+  background-color: var(--red);
+}
+
+/* Precedes styling when book is read */
+.read {
+  background-color: var(--green);
+}
+
+.btn-del:hover {
+  color: var(--red);
+}
+
+/* Change When implement readStatus Default is reb bg, then apply .read */
+
+/* FOOTER */
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  color: var(--blue-steel);
+  text-align: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+}
+
+.am-github {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease-in-out;
+}
+
+.am-github:hover {
+  transform: scale(1.25);
+} /* Pulls focus to github link when hovered */
+
+a {
+  text-decoration: none;
+}
+
+/* NEW BOOK MODAL */
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: var(--dark-grey);
+  opacity: 80%;
+  display: none;
+  transition: 200ms ease-in-out;
+}
+
+.modal {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  border-radius: var(--border-radius);
+  background-color: var(--blue-steel);
+  box-shadow: var(--shadow);
+  text-align: center;
+  padding: var(--spacing-xs);
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Form Styling */
+.book-form {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--border-radius);
+}
+
+.new-book {
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.5rem;
+}
+
+label,
+form > *,
+form {
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius);
+  font-size: 1.3rem;
+}
+
+.error-msg {
+  color: var(--red);
+  font-size: 0.9rem;
+}
+
+.input {
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input:invalid,
+.error {
+  border: 4px solid red;
+}
+
+[type="checkbox"] {
+  margin: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) 0;
+  vertical-align: middle;
+  height: 25px;
+  width: 25px;
+}
+
+.is-read:hover {
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  color: var(--blue-steel);
+  background-color: var(--dark-grey);
+}
