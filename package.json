@@ -1,0 +1,15 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "### To Do: * Set up npm / ESLint in repo * Import preferences from Library repo * Install babel package?? * Copy stating point from Library App * Start on CSS/HTML Game board replacement for Library grid * Modify modal to for game setup menu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.42.0"
+  }
+}
