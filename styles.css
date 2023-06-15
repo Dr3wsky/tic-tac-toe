@@ -14,13 +14,12 @@
   --light-grey: rgb(230, 228, 228);
   --dark-grey: rgba(158, 158, 158, 0.91);
   --black: rgb(0, 0, 0);
-  --blue-steel: rgb(52, 214, 220);
-  --green: rgb(123, 207, 102);
+  --green: rgba(140, 206, 124, 0.973);
   --dark-green: rgb(50, 88, 40);
   --red: rgb(202, 71, 71);
-  --shadow: rgba(0, 0, 0, 0.218) 0px 1px 4px;
+  --play-hover: var(--green);
   --header-shadow: var(--green) 0px 4px 6px;
-  --btn-shadow: var(--blue-steel) 6px 6px 6px;
+  --pop-shadow: rgba(0, 0, 0, 0.218) 4px 6px 4px;
   --border-radius: 6px;
   --container-width: 1600px;
   --spacing-xs: 0.5rem;
@@ -63,16 +62,19 @@ body {
 }
 
 .btn {
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  background-color: var(--light-grey);
+  background-color: var(--dark-green);
+  color: var(--green);
   border-radius: var(--border-radius);
+  box-shadow: var(--pop-shadow);
   border: none;
-  padding: var(--spacing-xs) var(--spacing-s);
+  padding: var(--spacing-s) var(--spacing-m);
   transition: transform 0.1s ease-in-out;
 }
 
 .btn:hover {
+  transform: scale(1.1);
   cursor: pointer;
 }
 
@@ -101,56 +103,33 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: var(--spacing-m);
   font-weight: 700;
+  padding-top: var(--spacing-m);
 }
 
 .prompt {
   font-size: 2.5rem;
 }
 
-.btn-add {
-  font-size: 1.5rem;
-}
-
-.btn-add:hover {
-  background-color: var(--blue-steel);
-  color: var(--light-grey);
-}
-
-.books-grid {
-  width: 100%;
+.gameboard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: var(--spacing-m);
-  padding-top: var(--spacing-s);
-}
-
-.book-card {
-  background-color: var(--blue-steel);
-  border: 2px solid var(--light-grey);
+  grid-template-columns: repeat(3, 1fr);
+  border: 4px solid var(--black);
+  box-shadow: var(--pop-shadow);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-xs);
+  margin: var(--spacing-m);
 }
 
-.book-info {
-  margin-top: var(--spacing-xs);
+.play-square {
+  height: 150px;
+  width: 150px;
+  background-color: var(--light-grey);
+  border: 2px dashed var(--dark-grey);
 }
 
-.btn-read {
-  background-color: var(--red);
-}
-
-/* Precedes styling when book is read */
-.read {
-  background-color: var(--green);
-}
-
-.btn-del:hover {
-  color: var(--red);
+.play-square:hover {
+  background-color: var(--play-hover);
+  cursor: pointer;
 }
 
 /* Change When implement readStatus Default is reb bg, then apply .read */
@@ -165,7 +144,7 @@ body {
   display: flex;
   align-content: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-size: 1.25rem;
 }
 

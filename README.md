@@ -2,9 +2,7 @@
 ## Small app to implement factories in place of object constructors
 
 ### To Do:
-* Set up npm / ESLint in repo
-* Import preferences from Library repo
-* Install babel package??
-* Copy stating point from Library App
-* Start on CSS/HTML Game board replacement for Library grid
+* Make gameboard display
+* Make starting selecotr buttons
+* Pull all relevan DOMs into JS
 * Modify modal to for game setup menu 
