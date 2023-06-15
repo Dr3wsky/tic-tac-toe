@@ -5,27 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
+    <link rel="shortcut icon" href="images/tic-tac-toe-removebg.ico" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo:wght@300;500;700;900&family=Poppins:wght@300;500;700;900&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
     />
-    <link rel="shortcut icon" href="images/tic-tac-toe-removebg.ico" />
-    <link rel="stylesheet" href="styles.css" />
     <script src="index.js" defer></script>
   </head>
 
   <body>
     <div class="header">
       <div class="container">
-        <h1 class="label">Tic Tac Toe</h1>
-        <button class="btn btn-login">Login</button>
+        <h1 class="title">Tic Tac Toe</h1>
       </div>
     </div>
-    <div class="main container">
-      <button class="btn btn-add" id="add-book-btn">
-        <i class="bx bx-plus-circle"></i> Add New Book
-      </button>
-      <div class="books-grid"></div>
+    <div class="container main">
+      <div class="prompt" id="prompt">Player X's Turn</div>
+      <div class="gameboard">
+        <div class="game-board" data-index="1"></div>
+        <div class="game-board" data-index="2"></div>
+        <div class="game-board" data-index="3"></div>
+        <div class="game-board" data-index="4"></div>
+        <div class="game-board" data-index="5"></div>
+        <div class="game-board" data-index="6"></div>
+        <div class="game-board" data-index="7"></div>
+        <div class="game-board" data-index="8"></div>
+        <div class="game-board" data-index="9"></div>
+      </div>
+      <div class="interact" id="interact">
+        <button class="btn reset">Reset</button>
+      </div>
     </div>
 
     <footer class="footer">

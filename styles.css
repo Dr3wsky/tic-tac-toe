@@ -12,48 +12,23 @@
 :root {
   --white: rgb(255, 255, 255);
   --light-grey: rgb(230, 228, 228);
-  --dark-grey: rgba(150, 150, 150, 0.91);
+  --dark-grey: rgba(158, 158, 158, 0.91);
   --black: rgb(0, 0, 0);
   --blue-steel: rgb(52, 214, 220);
-  --green: rgb(98, 228, 65);
-  --red: rgb(249, 55, 55);
+  --green: rgb(123, 207, 102);
+  --dark-green: rgb(50, 88, 40);
+  --red: rgb(202, 71, 71);
   --shadow: rgba(0, 0, 0, 0.218) 0px 1px 4px;
+  --header-shadow: var(--green) 0px 4px 6px;
   --btn-shadow: var(--blue-steel) 6px 6px 6px;
   --border-radius: 6px;
   --container-width: 1600px;
-  --spacing-xs: 1rem;
-  --spacing-s: 2rem;
-  --spacing-m: 3rem;
-  --spacing-l: 6rem;
-  --spacing-xl: 10rem;
-  --primary-font: Hack;
-  --secondary-font: Philosopher;
-  --title-font: Texas Tango;
-}
-
-@font-face {
-  font-family: Philosopher;
-  src: url("fonts/Philosopher.woff2") format("woff2"),
-    url("fonts/Philosopher.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Texas Tango;
-  src: url("fonts/TexasTangoBOLDPERSONALUSE.woff2") format("woff2"),
-    url("fonts/TexasTangoBOLDPERSONALUSE.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Hack;
-  src: url("fonts/Hack-Regular.woff2") format("woff2"),
-    url("fonts/Hack-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
+  --spacing-xs: 0.5rem;
+  --spacing-s: 1rem;
+  --spacing-m: 2rem;
+  --spacing-l: 4rem;
+  --spacing-xl: 8rem;
+  --font: "Exo", "Poppins", sans-serif;
 }
 
 html {
@@ -72,9 +47,9 @@ body {
 }
 
 body {
-  background-color: var(--light-grey);
+  background-color: var(--dark-grey);
   color: var(--black);
-  font-family: Hack, Philosopher, "Lucida", "Roboto";
+  font-family: var(--font);
   font-size: 1rem;
   word-wrap: break-word;
   /* footer support */
@@ -107,21 +82,16 @@ body {
 
 /* HEADER Styling */
 .header {
-  background-color: var(--white);
-  box-shadow: var(--shadow);
+  background-color: var(--dark-green);
+  box-shadow: var(--header-shadow);
+  color: var(--green);
+  font-size: 3rem;
 }
 
 .container {
-  padding: var(--spacing-m);
-  font-size: 1.5rem;
+  padding: var(--spacing-s);
   display: flex;
-  justify-content: space-between;
-}
-
-.btn-login:hover {
-  box-shadow: var(--btn-shadow);
-  background-color: var(--dark-grey);
-  color: var(--blue-steel);
+  justify-content: center;
 }
 
 /* MAIN */
@@ -131,7 +101,12 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: var(--spacing-s);
+  padding-top: var(--spacing-m);
+  font-weight: 700;
+}
+
+.prompt {
+  font-size: 2.5rem;
 }
 
 .btn-add {
@@ -185,7 +160,7 @@ body {
   position: absolute;
   bottom: 0px;
   width: 100%;
-  color: var(--blue-steel);
+  color: var(--green);
   text-align: center;
   display: flex;
   align-content: center;
