@@ -4,53 +4,79 @@ const redColor = getComputedStyle(ele).getPropertyValue("--red");
 const greenColor = getComputedStyle(ele).getPropertyValue("--green");
 const prompt = document.getElementById("prompt");
 const replayBtn = document.getElementById("replay");
+const btnMarkX = document.getElementById("btn-markX");
+const btnMarkO = document.getElementById("btn-markO");
 const squares = document.querySelectorAll(".play-square");
 
-const addBookBtn = document.getElementById("add-book-btn");
-const submitBtn = document.getElementById("submit-btn");
 const replayModal = document.getElementById("replay-modal");
 const overlay = document.querySelector(".overlay");
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // Data Structure and objects
 // Placeholders until make player factoriy and modules
-const player1 = "x";
-const player2 = "o";
-const markerO = '<i class="bx bx-circle"></i>';
-const markerX = '<i class="bx bx-x"></i>';
 
-const marker = markerO;
-
-const Player = (e) => {
-  this.mark = me.target.innerHTML;
-  const getMark = () => {
-    return mark;
-  };
-  return { getMark };
+const Player = (id, mark) => {
+  this.id = id;
+  this.mark = mark;
+  return { id, mark };
 };
 
-// Initialize gamevoard modules
+const boardControl = (() => {
+  const boardStatus = ["", "", "", "", "", "", "", "", ""];
 
-const gameControl = (() => {
+  const clear = () => {
+    for (let i = 0; i < boardStatus.length; i++) {
+      boardStatus[i] = "";
+    }
+  };
+  return { clear };
+})();
+
+// Display UI and event listeners
+const displayControl = (() => {
   const replay = () => {
     overlay.style.display = "block";
     replayModal.classList.add("active");
   };
 
-  const undoReplay = () => {
+  const closeModal = () => {
     overlay.style.display = "none";
     replayModal.classList.remove("active");
   };
 
-  return { replay, undoReplay };
+  const checkKeyPress = (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+  // Event Listners for buttons
+  replayBtn.onclick = replay;
+  overlay.onclick = closeModal;
+  window.onkeyup = checkKeyPress;
+  return { checkKeyPress };
+})();
+
+// Game control methods and main logic
+const gameControl = (() => {
+  const newGame = (e) => {
+    if (e.target.classList[1] === "bx-radio-circle") {
+      const player1 = Player(1, '<i class="bx bx-radio-circle"></i>');
+      const player2 = Player(2, '<i class="bx bx-x"></i>');
+    } else {
+      const player1 = Player(1, '<i class="bx bx-x"></i>');
+      const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
+    }
+    boardControl.clear();
+    let round = 0;
+  };
+
+  // Resetting Game funcs, controlled by event listeners
+
+  return { newGame };
 })();
 
 // Event Listeners
-squares.forEach((square) => square.addEventListener("click", play));
-replayBtn.onclick = gameControl.replay;
-overlay.onclick = gameControl.undoReplay;
+// squares.forEach((square) => square.addEventListener("click", play));
 
-function play(e, marker) {
-  const idx = e.target.dataset.index;
-  e.target.innerHTML = marker;
-}
+btnMarkO.onclick = gameControl.newGame;
+btnMarkX.onclick = gameControl.newGame;

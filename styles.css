@@ -16,7 +16,8 @@
   --black: rgb(0, 0, 0);
   --green: rgba(140, 206, 124, 0.973);
   --dark-green: rgb(50, 88, 40);
-  --red: rgb(202, 71, 71);
+  --red: rgb(240, 93, 93);
+  --dark-red: rgb(100, 29, 29);
   --play-hover: var(--green);
   --header-shadow: var(--green) 0px 4px 6px;
   --pop-shadow: rgba(0, 0, 0, 0.218) 4px 6px 4px;
@@ -97,7 +98,6 @@ body {
 }
 
 /* MAIN */
-
 .main {
   text-align: center;
   justify-content: center;
@@ -125,11 +125,39 @@ body {
   width: 150px;
   background-color: var(--light-grey);
   border: 2px dashed var(--dark-grey);
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-square > * {
+  font-size: 8rem;
+  font-weight: 900;
 }
 
 .play-square:hover {
   background-color: var(--play-hover);
   cursor: pointer;
+}
+
+.select-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-l);
+  padding: var(--spacing-m);
+}
+
+.btn-markX,
+.btn-markO {
+  font-size: 4rem;
+  padding: var(--spacing-s) var(--spacing-m) var(--spacing-xs) var(--spacing-m);
+}
+
+.btn-markX {
+  color: var(--red);
+  background-color: var(--dark-red);
 }
 
 /* Change When implement readStatus Default is reb bg, then apply .read */
@@ -175,75 +203,23 @@ a {
   transition: 200ms ease-in-out;
 }
 
-.modal {
+.replay-modal {
   position: absolute;
   z-index: 1;
   top: 50%;
   left: 50%;
-  width: 500px;
   border-radius: var(--border-radius);
-  background-color: var(--blue-steel);
+  border: 4pt solid var(--black);
+  background-color: var(--light-grey);
   box-shadow: var(--shadow);
   text-align: center;
-  padding: var(--spacing-xs);
-  transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
-}
-
-.modal.active {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-/* Form Styling */
-.book-form {
+  padding: var(--spacing-m) var(--spacing-l);
   display: flex;
   flex-direction: column;
-  border-radius: var(--border-radius);
+  /* transform: translate(-50%, -50%) scale(0);
+ transition: 200ms ease-in-out; */
 }
 
-.new-book {
-  margin-bottom: var(--spacing-xs);
-  font-size: 1.5rem;
-}
-
-label,
-form > *,
-form {
-  padding: var(--spacing-xs);
-  border-radius: var(--border-radius);
-  font-size: 1.3rem;
-}
-
-.error-msg {
-  color: var(--red);
-  font-size: 0.9rem;
-}
-
-.input {
-  border: none;
-}
-
-.input:focus {
-  outline: none;
-}
-
-.input:invalid,
-.error {
-  border: 4px solid red;
-}
-
-[type="checkbox"] {
-  margin: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) 0;
-  vertical-align: middle;
-  height: 25px;
-  width: 25px;
-}
-
-.is-read:hover {
-  cursor: pointer;
-}
-
-.btn-submit:hover {
-  color: var(--blue-steel);
-  background-color: var(--dark-grey);
+.replay-modal.active {
+  transform: translate(-50%, -50%) scale(1);
 }

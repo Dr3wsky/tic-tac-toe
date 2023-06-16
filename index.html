@@ -30,9 +30,9 @@
       <div class="prompt" id="prompt">Player X's Turn</div>
       <div class="gameboard">
         <div class="play-square" data-index="1">
-          <box-icon name="circle"></box-icon>
+          <i class="bx bx-radio-circle"></i>
         </div>
-        <div class="play-square" data-index="2"></div>
+        <div class="play-square" data-index="2"><i class="bx bx-x"></i></div>
         <div class="play-square" data-index="3"></div>
         <div class="play-square" data-index="4"></div>
         <div class="play-square" data-index="5"></div>
@@ -55,45 +55,16 @@
       >
     </footer>
 
-    <div class="modal" id="add-book-modal">
-      <form class="book-form" id="book-form">
-        <h1 class="new-book">NEW BOOK</h1>
-        <input
-          class="input"
-          type="text"
-          id="title"
-          required
-          placeholder="Book Title"
-          maxlength="100"
-        />
-        <p class="error-msg" id="title-error"></p>
-        <input
-          class="input"
-          type="text"
-          id="author"
-          required
-          placeholder="Author"
-          maxlength="100"
-          onin
-        />
-        <p class="error-msg" id="author-error"></p>
-        <input
-          class="input"
-          type="number"
-          id="pages"
-          required
-          placeholder="# Pages"
-          max="10000"
-          inputmode="numeric"
-        />
-        <label for="is-read">
-          <input class="is-read" type="checkbox" id="is-read" />Has this book
-          been read?</label
-        >
-        <button class="btn btn-submit" type="submit" id="submit-btn">
-          <i class="bx bx-book-add"></i> Add
+    <div class="replay-modal" id="replay-modal">
+      <h1 class="player-prompt">Player 1 choose X's or O's</h1>
+      <div class="select-buttons">
+        <button class="btn btn-markX" id="btn-markX">
+          <i class="bx bx-x"></i>
         </button>
-      </form>
+        <button class="btn btn-markO" id="btn-markO">
+          <i class="bx bx-radio-circle"></i>
+        </button>
+      </div>
     </div>
     <div class="overlay"></div>
   </body>
