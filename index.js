@@ -24,12 +24,43 @@ const Player = (id, mark) => {
 const boardControl = (() => {
   const boardStatus = ["", "", "", "", "", "", "", "", ""];
 
+  const updateBoard = (board) => {
+    for (let i = 1; i <= board.length; i++) {
+      let field = document.body.querySelector(
+        `.play-square[data-index="${i}"]`
+      );
+      field.innerHTML = board[i];
+    }
+  };
+
   const clear = () => {
     for (let i = 0; i < boardStatus.length; i++) {
       boardStatus[i] = "";
     }
+    updateBoard(boardStatus);
   };
-  return { clear };
+
+  return { clear, updateBoard };
+})();
+
+// Game control methods and main logic
+const gameControl = (() => {
+  function newGame(e) {
+    if (e.target.classList[1] === "bx-radio-circle") {
+      return (
+        (player1 = Player(1, '<i class="bx bx-radio-circle"></i>')),
+        (player2 = Player(2, '<i class="bx bx-x"></i>'))
+      );
+      return (player2 = Player(2, '<i class="bx bx-x"></i>'));
+    } else {
+      const player1 = Player(1, '<i class="bx bx-x"></i>');
+      const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
+    }
+    boardControl.clear();
+    console.log(player1, player2);
+    displayControl.closeModal();
+  }
+  return { newGame };
 })();
 
 // Display UI and event listeners
@@ -53,30 +84,9 @@ const displayControl = (() => {
   replayBtn.onclick = replay;
   overlay.onclick = closeModal;
   window.onkeyup = checkKeyPress;
-  return { checkKeyPress };
+  btnMarkO.onclick = gameControl.newGame;
+  btnMarkX.onclick = gameControl.newGame;
+  return { closeModal };
 })();
-
-// Game control methods and main logic
-const gameControl = (() => {
-  const newGame = (e) => {
-    if (e.target.classList[1] === "bx-radio-circle") {
-      const player1 = Player(1, '<i class="bx bx-radio-circle"></i>');
-      const player2 = Player(2, '<i class="bx bx-x"></i>');
-    } else {
-      const player1 = Player(1, '<i class="bx bx-x"></i>');
-      const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
-    }
-    boardControl.clear();
-    let round = 0;
-  };
-
-  // Resetting Game funcs, controlled by event listeners
-
-  return { newGame };
-})();
-
 // Event Listeners
 // squares.forEach((square) => square.addEventListener("click", play));
-
-btnMarkO.onclick = gameControl.newGame;
-btnMarkX.onclick = gameControl.newGame;
