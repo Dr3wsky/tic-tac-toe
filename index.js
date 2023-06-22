@@ -16,77 +16,78 @@ const overlay = document.querySelector(".overlay");
 // Placeholders until make player factoriy and modules
 
 const Player = (id, mark) => {
-  this.id = id;
-  this.mark = mark;
-  return { id, mark };
+	this.id = id;
+	this.mark = mark;
+
+	return { id, mark };
 };
 
 const boardControl = (() => {
-  const boardStatus = ["", "", "", "", "", "", "", "", ""];
+	const boardStatus = ["", "", "", "", "", "", "", "", ""];
 
-  const updateBoard = (board) => {
-    for (let i = 1; i <= board.length; i++) {
-      let field = document.body.querySelector(
-        `.play-square[data-index="${i}"]`
-      );
-      field.innerHTML = board[i];
-    }
-  };
+	const updateBoard = (board) => {
+		for (let i = 1; i <= board.length; i++) {
+			let field = document.body.querySelector(
+				`.play-square[data-index="${i}"]`
+			);
+			field.innerHTML = board[i];
+		}
+	};
 
-  const clear = () => {
-    for (let i = 0; i < boardStatus.length; i++) {
-      boardStatus[i] = "";
-    }
-    updateBoard(boardStatus);
-  };
+	const clear = () => {
+		for (let i = 0; i < boardStatus.length; i++) {
+			boardStatus[i] = "";
+		}
+		updateBoard(boardStatus);
+	};
 
-  return { clear, updateBoard };
+	return { clear, updateBoard };
 })();
 
 // Game control methods and main logic
 const gameControl = (() => {
-  function newGame(e) {
-    if (e.target.classList[1] === "bx-radio-circle") {
-      return (
-        (player1 = Player(1, '<i class="bx bx-radio-circle"></i>')),
-        (player2 = Player(2, '<i class="bx bx-x"></i>'))
-      );
-      return (player2 = Player(2, '<i class="bx bx-x"></i>'));
-    } else {
-      const player1 = Player(1, '<i class="bx bx-x"></i>');
-      const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
-    }
-    boardControl.clear();
-    console.log(player1, player2);
-    displayControl.closeModal();
-  }
-  return { newGame };
+	function newGame(e) {
+		if (e.target.classList[1] === "bx-radio-circle") {
+			return (
+				(player1 = Player(1, '<i class="bx bx-radio-circle"></i>')),
+				(player2 = Player(2, '<i class="bx bx-x"></i>'))
+			);
+			return (player2 = Player(2, '<i class="bx bx-x"></i>'));
+		} else {
+			const player1 = Player(1, '<i class="bx bx-x"></i>');
+			const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
+		}
+		boardControl.clear();
+		console.log(player1, player2);
+		displayControl.closeModal();
+	}
+	return { newGame };
 })();
 
 // Display UI and event listeners
 const displayControl = (() => {
-  const replay = () => {
-    overlay.style.display = "block";
-    replayModal.classList.add("active");
-  };
+	const replay = () => {
+		overlay.style.display = "block";
+		replayModal.classList.add("active");
+	};
 
-  const closeModal = () => {
-    overlay.style.display = "none";
-    replayModal.classList.remove("active");
-  };
+	const closeModal = () => {
+		overlay.style.display = "none";
+		replayModal.classList.remove("active");
+	};
 
-  const checkKeyPress = (e) => {
-    if (e.key === "Escape") {
-      closeModal();
-    }
-  };
-  // Event Listners for buttons
-  replayBtn.onclick = replay;
-  overlay.onclick = closeModal;
-  window.onkeyup = checkKeyPress;
-  btnMarkO.onclick = gameControl.newGame;
-  btnMarkX.onclick = gameControl.newGame;
-  return { closeModal };
+	const checkKeyPress = (e) => {
+		if (e.key === "Escape") {
+			closeModal();
+		}
+	};
+	// Event Listners for buttons
+	replayBtn.onclick = replay;
+	overlay.onclick = closeModal;
+	window.onkeyup = checkKeyPress;
+	btnMarkO.onclick = gameControl.newGame;
+	btnMarkX.onclick = gameControl.newGame;
+	return { closeModal };
 })();
 // Event Listeners
 // squares.forEach((square) => square.addEventListener("click", play));
