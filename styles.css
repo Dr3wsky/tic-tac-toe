@@ -216,8 +216,8 @@ a {
   padding: var(--spacing-m) var(--spacing-l);
   display: flex;
   flex-direction: column;
-  /* transform: translate(-50%, -50%) scale(0);
- transition: 200ms ease-in-out; */
+  transform: translate(-50%, -50%) scale(0);
+ transition: 200ms ease-in-out;
 }
 
 .replay-modal.active {

@@ -30,7 +30,7 @@ const boardControl = (() => {
 			let field = document.body.querySelector(
 				`.play-square[data-index="${i}"]`
 			);
-			field.innerHTML = board[i];
+			field.innerHTML = board[i - 1];
 		}
 	};
 
@@ -46,25 +46,46 @@ const boardControl = (() => {
 
 // Game control methods and main logic
 const gameControl = (() => {
+	// Initialize player vars
+	let player1 = Player(1, '<i class="bx bx-x"></i>');
+	let player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
+	let gameOn = true;
+	let round = 0;
+
 	function newGame(e) {
+		// Swap player vars based on selection optioins
+
 		if (e.target.classList[1] === "bx-radio-circle") {
-			const player1 = Player(1, '<i class="bx bx-radio-circle"></i>');
-			const player2 = Player(2, '<i class="bx bx-x"></i>');
-			console.log({ player1 }, { player2 });
-		} else {
-			const player1 = Player(1, '<i class="bx bx-x"></i>');
-			const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
-			console.log({ player1 }, { player2 });
+			player1 = Player(1, '<i class="bx bx-radio-circle"></i>');
+			player2 = Player(2, '<i class="bx bx-x"></i>');
 		}
-		console.log({ player1 }, { player2 });
-		boardControl.clear();
 		displayControl.closeModal();
+		boardControl.clear();
+		playRound(round);
 	}
-	return { newGame };
+
+	function playRound() {
+		round++;
+		displayControl.updatePrompt(round, player1, player2);
+	}
+
+	return { newGame, player1, player2 };
 })();
 
 // Display UI and event listeners
 const displayControl = (() => {
+	const updatePrompt = (round, player1, player2) => {
+		if (round % 2 === 0) {
+			document.getElementById(
+				"prompt"
+			).innerHTML = `Player ${player2.id}'s turn. \n Place an ${player2.mark}`;
+		} else {
+			document.getElementById(
+				"prompt"
+			).innerHTML = `Player ${player1.id}'s turn. \n Place an ${player1.mark}`;
+		}
+	};
+
 	const replay = () => {
 		overlay.style.display = "block";
 		replayModal.classList.add("active");
@@ -87,7 +108,7 @@ const displayControl = (() => {
 	window.onkeyup = checkKeyPress;
 	btnMarkO.onclick = gameControl.newGame;
 	btnMarkX.onclick = gameControl.newGame;
-	return { closeModal };
+	return { closeModal, updatePrompt };
 })();
 // Event Listeners
 // squares.forEach((square) => square.addEventListener("click", play));
