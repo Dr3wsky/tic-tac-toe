@@ -69,20 +69,17 @@ const gameControl = (() => {
 		displayControl.updatePrompt(round, player1, player2);
 	}
 
-	return { newGame, player1, player2 };
+	return { newGame };
 })();
 
 // Display UI and event listeners
 const displayControl = (() => {
 	const updatePrompt = (round, player1, player2) => {
+		const prompt = document.getElementById("prompt");
 		if (round % 2 === 0) {
-			document.getElementById(
-				"prompt"
-			).innerHTML = `Player ${player2.id}'s turn. \n Place an ${player2.mark}`;
+			prompt.innerHTML = `Player ${player2.id}'s turn.<br />Place an <span>${player2.mark}</span>`;
 		} else {
-			document.getElementById(
-				"prompt"
-			).innerHTML = `Player ${player1.id}'s turn. \n Place an ${player1.mark}`;
+			prompt.innerHTML = `Player ${player1.id}'s turn.<br />Place an <span>${player1.mark}</span>`;
 		}
 	};
 

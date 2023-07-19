@@ -160,6 +160,12 @@ body {
   background-color: var(--dark-red);
 }
 
+span {
+  vertical-align: middle;
+  font-size: 4.5rem;
+  font-weight: 900;
+}
+
 /* Change When implement readStatus Default is reb bg, then apply .read */
 
 /* FOOTER */
