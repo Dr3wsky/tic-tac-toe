@@ -48,17 +48,16 @@ const boardControl = (() => {
 const gameControl = (() => {
 	function newGame(e) {
 		if (e.target.classList[1] === "bx-radio-circle") {
-			return (
-				(player1 = Player(1, '<i class="bx bx-radio-circle"></i>')),
-				(player2 = Player(2, '<i class="bx bx-x"></i>'))
-			);
-			return (player2 = Player(2, '<i class="bx bx-x"></i>'));
+			const player1 = Player(1, '<i class="bx bx-radio-circle"></i>');
+			const player2 = Player(2, '<i class="bx bx-x"></i>');
+			console.log({ player1 }, { player2 });
 		} else {
 			const player1 = Player(1, '<i class="bx bx-x"></i>');
 			const player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
+			console.log({ player1 }, { player2 });
 		}
+		console.log({ player1 }, { player2 });
 		boardControl.clear();
-		console.log(player1, player2);
 		displayControl.closeModal();
 	}
 	return { newGame };
@@ -81,6 +80,7 @@ const displayControl = (() => {
 			closeModal();
 		}
 	};
+
 	// Event Listners for buttons
 	replayBtn.onclick = replay;
 	overlay.onclick = closeModal;
