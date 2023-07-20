@@ -19,11 +19,11 @@ const boardControl = (() => {
 	const boardStatus = ["", "", "", "", "", "", "", "", ""];
 
 	const update = (board) => {
-		for (let i = 1; i <= board.length; i++) {
+		for (let i = 0; i < board.length; i++) {
 			let field = document.body.querySelector(
 				`.play-square[data-index="${i}"]`
 			);
-			field.innerHTML = board[i - 1];
+			field.innerHTML = board[i];
 		}
 	};
 
@@ -37,8 +37,9 @@ const boardControl = (() => {
 	function placeMarker(e) {
 		const square = e.target.dataset.index;
 		const marker = gameControl.getPlayerMark();
-		boardStatus[square - 1] = marker;
+		boardStatus[square] = marker;
 		update(boardStatus);
+		gameControl.checkEnd(boardStatus, marker);
 		gameControl.nextRound();
 	}
 
@@ -66,6 +67,27 @@ const gameControl = (() => {
 		displayControl.closeModal();
 		boardControl.clear();
 		nextRound(round);
+	}
+
+	function checkWin(board, marker) {
+		const winConditions = [
+			[0, 1, 2],
+			[3, 4, 5],
+			[6, 7, 8],
+			[0, 3, 6],
+			[1, 4, 7],
+			[2, 5, 8],
+			[0, 4, 8],
+			[2, 4, 6],
+		];
+
+		// return winConditions
+		// .filter((combination) => combination.includes(fieldIndex))
+		// .some((possibleCombination) =>
+		//   possibleCombination.every(
+		// 	(index) => gameBoard.getField(index) === marker
+		//   )
+		// );
 	}
 
 	function getPlayerMark() {
