@@ -14,6 +14,7 @@ const Player = (id, mark) => {
 	return { id, mark };
 };
 
+// Game control methods and main logic
 const boardControl = (() => {
 	const boardStatus = ["", "", "", "", "", "", "", "", ""];
 
@@ -33,18 +34,17 @@ const boardControl = (() => {
 		update(boardStatus);
 	};
 
-	function placeMarker(e, round, player1, player2) {
+	function placeMarker(e) {
 		const square = e.target.dataset.index;
-		square =
-			round % 2 === 0
-				? (boardStatus[square - 1] = player2.mark)
-				: (boardStatus[square - 1] = player1.mark);
+		const marker = gameControl.getPlayerMark();
+		boardStatus[square - 1] = marker;
+		update(boardStatus);
+		gameControl.nextRound();
 	}
 
 	return { clear, update, placeMarker };
 })();
 
-// Game control methods and main logic
 const gameControl = (() => {
 	// Initialize player vars
 	let player1 = Player(1, '<i class="bx bx-x"></i>');
@@ -65,7 +65,7 @@ const gameControl = (() => {
 		}
 		displayControl.closeModal();
 		boardControl.clear();
-		playRound(round);
+		nextRound(round);
 	}
 
 	function getPlayerMark() {
@@ -76,12 +76,12 @@ const gameControl = (() => {
 		return round % 2 === 0 ? player2.id : player1.id;
 	}
 
-	function playRound() {
+	function nextRound() {
 		round++;
-		displayControl.updatePrompt(round, player1, player2);
+		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 	}
 
-	return { newGame, getPlayerMark, getPlayerId };
+	return { newGame, getPlayerMark, getPlayerId, nextRound };
 })();
 
 // Display UI and event listeners
@@ -93,13 +93,9 @@ const displayControl = (() => {
 	const replayModal = document.getElementById("replay-modal");
 	const overlay = document.querySelector(".overlay");
 
-	const updatePrompt = (round, player1, player2) => {
+	const updatePrompt = (id, mark) => {
 		const prompt = document.getElementById("prompt");
-		if (round % 2 === 0) {
-			prompt.innerHTML = `Player ${player2.id}'s turn.<br />Place an <span>${player2.mark}</span>`;
-		} else {
-			prompt.innerHTML = `Player ${player1.id}'s turn.<br />Place an <span>${player1.mark}</span>`;
-		}
+		prompt.innerHTML = `Player ${id}'s turn.<br />Place an <span>${mark}</span>`;
 	};
 
 	const replay = () => {
@@ -126,5 +122,3 @@ const displayControl = (() => {
 	btnMarkX.onclick = gameControl.newGame;
 	return { closeModal, updatePrompt };
 })();
-// Event Listeners
-// squares.forEach((square) => square.addEventListener("click", play));
