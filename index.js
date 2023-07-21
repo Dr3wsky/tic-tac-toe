@@ -34,16 +34,29 @@ const boardControl = (() => {
 		update(boardStatus);
 	};
 
+	const setField = (index, marker) => {
+		if (index > boardStatus.length) return;
+		boardStatus[index] = marker;
+		update(boardStatus);
+	};
+
+	const getSquareIndex = (index) => {
+		if (index > boardStatus.length) return;
+		return board[index];
+	};
+
 	function placeMarker(e) {
 		const square = e.target.dataset.index;
 		const marker = gameControl.getPlayerMark();
-		boardStatus[square] = marker;
-		update(boardStatus);
-		gameControl.checkEnd(boardStatus, marker);
-		gameControl.nextRound();
+		if (boardStatus[square] === "") {
+			boardStatus[square] = marker;
+			update(boardStatus);
+			gameControl.checkWin(boardStatus, marker);
+			gameControl.playRound();
+		}
 	}
 
-	return { clear, update, placeMarker };
+	return { clear, setField, placeMarker, getSquareIndex };
 })();
 
 const gameControl = (() => {
@@ -54,7 +67,11 @@ const gameControl = (() => {
 	let round = 0;
 	const squares = document.querySelectorAll(".play-square");
 	squares.forEach((square) =>
-		addEventListener("click", boardControl.placeMarker)
+		addEventListener("click", (e) => {
+			if (e.target.innerHTML != "") return;
+			playRound(parseInt(e.target.dataset.index));
+			// update voard?!
+		})
 	);
 
 	function newGame(e) {
@@ -66,10 +83,12 @@ const gameControl = (() => {
 		}
 		displayControl.closeModal();
 		boardControl.clear();
-		nextRound(round);
+		round++;
+		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 	}
 
-	function checkWin(board, marker) {
+	function checkWin(squareIndex) {
+		// Assigns arrays to check if squares full to satisfy game over
 		const winConditions = [
 			[0, 1, 2],
 			[3, 4, 5],
@@ -80,14 +99,14 @@ const gameControl = (() => {
 			[0, 4, 8],
 			[2, 4, 6],
 		];
-
-		// return winConditions
-		// .filter((combination) => combination.includes(fieldIndex))
-		// .some((possibleCombination) =>
-		//   possibleCombination.every(
-		// 	(index) => gameBoard.getField(index) === marker
-		//   )
-		// );
+		// Filters to check if any of winConditions are satisfied by current marker
+		return winConditions
+			.filter((combination) => combination.includes(squareIndex))
+			.some((possibleCombination) =>
+				possibleCombination.every(
+					(index) => boardControl.getSquareIndex(index) === getPlayerMark()
+				)
+			);
 	}
 
 	function getPlayerMark() {
@@ -98,12 +117,14 @@ const gameControl = (() => {
 		return round % 2 === 0 ? player2.id : player1.id;
 	}
 
-	function nextRound() {
+	function playRound(squareIndex) {
+		boardControl.setField(squareIndex, getPlayerMark());
+
 		round++;
 		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 	}
 
-	return { newGame, getPlayerMark, getPlayerId, nextRound };
+	return { newGame, getPlayerMark, playRound, checkWin };
 })();
 
 // Display UI and event listeners
@@ -115,10 +136,10 @@ const displayControl = (() => {
 	const replayModal = document.getElementById("replay-modal");
 	const overlay = document.querySelector(".overlay");
 
-	const updatePrompt = (id, mark) => {
+	function updatePrompt(id, mark) {
 		const prompt = document.getElementById("prompt");
 		prompt.innerHTML = `Player ${id}'s turn.<br />Place an <span>${mark}</span>`;
-	};
+	}
 
 	const replay = () => {
 		overlay.style.display = "block";
