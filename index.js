@@ -34,29 +34,17 @@ const boardControl = (() => {
 		update(boardStatus);
 	};
 
-	const setField = (index, marker) => {
-		if (index > boardStatus.length) return;
+	const placeMarker = (index, marker) => {
 		boardStatus[index] = marker;
 		update(boardStatus);
 	};
 
 	const getSquareIndex = (index) => {
 		if (index > boardStatus.length) return;
-		return board[index];
+		return boardStatus[index];
 	};
 
-	function placeMarker(e) {
-		const square = e.target.dataset.index;
-		const marker = gameControl.getPlayerMark();
-		if (boardStatus[square] === "") {
-			boardStatus[square] = marker;
-			update(boardStatus);
-			gameControl.checkWin(boardStatus, marker);
-			gameControl.playRound();
-		}
-	}
-
-	return { clear, setField, placeMarker, getSquareIndex };
+	return { clear, placeMarker, getSquareIndex };
 })();
 
 const gameControl = (() => {
@@ -64,16 +52,7 @@ const gameControl = (() => {
 	let player1 = Player(1, '<i class="bx bx-x"></i>');
 	let player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
 	const gameOn = true;
-	let round = 0;
-	const squares = document.querySelectorAll(".play-square");
-	squares.forEach((square) =>
-		addEventListener("click", (e) => {
-			if (e.target.innerHTML != "") return;
-			playRound(parseInt(e.target.dataset.index));
-			// update voard?!
-		})
-	);
-
+	let round;
 	function newGame(e) {
 		// Swap player vars based on selection optioins
 
@@ -83,7 +62,7 @@ const gameControl = (() => {
 		}
 		displayControl.closeModal();
 		boardControl.clear();
-		round++;
+		round = 1;
 		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 	}
 
@@ -117,14 +96,20 @@ const gameControl = (() => {
 		return round % 2 === 0 ? player2.id : player1.id;
 	}
 
-	function playRound(squareIndex) {
-		boardControl.setField(squareIndex, getPlayerMark());
+	const playRound = (e) => {
+		if (e.target.classList[0] !== "bx") {
+			const squareIndex = parseInt(e.target.dataset.index);
+			boardControl.placeMarker(squareIndex, getPlayerMark());
+			checkWin();
+			round++;
+			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
+		}
+	};
 
-		round++;
-		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
-	}
+	const squares = document.querySelectorAll(".play-square");
+	squares.forEach((square) => addEventListener("click", playRound));
 
-	return { newGame, getPlayerMark, playRound, checkWin };
+	return { newGame, getPlayerMark, checkWin };
 })();
 
 // Display UI and event listeners
