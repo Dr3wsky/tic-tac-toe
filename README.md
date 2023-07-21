@@ -1,9 +1,13 @@
 # Tic-Tac-Toe
-## Small app to implement factories in place of object constructors
+
+Tic-Tac-Toe game created with HTML, CSS and JS.
+
+[Live Demo]([https://dr3wsky.github.io/tic-tac-toe/]) :point_left:
+
 
 ### To Do:
-* Make gameboard display
-* Make starting selecotr buttons
-* Pull all relevan DOMs into JS
-* Modify modal to for game setup menu 
+* debug checkWin
+* Imolement logic for cat's game
+* add animation for winning game (add class.win) to .bx
+* Modify Modal for end-game.
 * Add CSS media querry for smaller screen mod
