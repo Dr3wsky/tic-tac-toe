@@ -1,8 +1,7 @@
 # Tic-Tac-Toe
 
 Tic-Tac-Toe game created with HTML, CSS and JS.
-
-[Live Demo]([https://dr3wsky.github.io/tic-tac-toe/]) :point_left:
+**Live preview** of the project is [here](https://dr3wsky.github.io/tic-tac-toe/) :point_left:
 
 
 ### To Do:
