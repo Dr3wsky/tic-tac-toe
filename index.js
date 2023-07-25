@@ -27,6 +27,10 @@ const boardControl = (() => {
 		}
 	};
 
+	const checkEmpty = () => {
+		return boardStatus.join("") === "";
+	};
+
 	const clear = () => {
 		for (let i = 0; i < boardStatus.length; i++) {
 			boardStatus[i] = "";
@@ -44,14 +48,14 @@ const boardControl = (() => {
 		return boardStatus[index];
 	};
 
-	return { clear, placeMarker, getSquareIndex };
+	return { clear, placeMarker, getSquareIndex, checkEmpty };
 })();
 
 const gameControl = (() => {
 	// Initialize player vars
-	let player1 = Player(1, '<i class="bx bx-x"></i>');
-	let player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
-	const gameOn = true;
+	let player1;
+	let player2;
+	let gameOn;
 	let round;
 	function newGame(e) {
 		// Swap player vars based on selection optioins
@@ -59,10 +63,14 @@ const gameControl = (() => {
 		if (e.target.classList[1] === "bx-radio-circle") {
 			player1 = Player(1, '<i class="bx bx-radio-circle"></i>');
 			player2 = Player(2, '<i class="bx bx-x"></i>');
+		} else {
+			player1 = Player(1, '<i class="bx bx-x"></i>');
+			player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
 		}
 		displayControl.closeModal();
 		boardControl.clear();
 		round = 1;
+		gameOn = true;
 		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 	}
 
@@ -96,15 +104,21 @@ const gameControl = (() => {
 		return round % 2 === 0 ? player2.id : player1.id;
 	}
 
-	const playRound = (e) => {
-		if (e.target.classList[0] !== "bx") {
+	function playRound(e) {
+		if (!gameOn) {
+			newGame(e);
+			const squareIndex = parseInt(e.target.dataset.index);
+			boardControl.placeMarker(squareIndex, getPlayerMark());
+			round++;
+			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
+		} else if (gameOn && e.target.classList[0] !== "bx") {
 			const squareIndex = parseInt(e.target.dataset.index);
 			boardControl.placeMarker(squareIndex, getPlayerMark());
 			checkWin();
 			round++;
 			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 		}
-	};
+	}
 
 	const squares = document.querySelectorAll(".play-square");
 	squares.forEach((square) => addEventListener("click", playRound));
