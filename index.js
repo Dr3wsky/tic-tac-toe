@@ -53,8 +53,8 @@ const boardControl = (() => {
 
 const gameControl = (() => {
 	// Initialize player vars
-	let player1;
-	let player2;
+	let player1 = Player(1, '<i class="bx bx-x"></i>');
+	let player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
 	let gameOn;
 	let round;
 	function newGame(e) {
@@ -72,6 +72,8 @@ const gameControl = (() => {
 		round = 1;
 		gameOn = true;
 		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
+		let squares = document.querySelectorAll(".play-square");
+		squares.forEach((square) => addEventListener("click", playRound, true));
 	}
 
 	function checkWin(squareIndex) {
@@ -105,23 +107,17 @@ const gameControl = (() => {
 	}
 
 	function playRound(e) {
-		if (!gameOn) {
-			newGame(e);
+		if (
+			e.target.classList[0] !== "bx" &&
+			e.target.classList[0] != "container"
+		) {
 			const squareIndex = parseInt(e.target.dataset.index);
 			boardControl.placeMarker(squareIndex, getPlayerMark());
-			round++;
-			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
-		} else if (gameOn && e.target.classList[0] !== "bx") {
-			const squareIndex = parseInt(e.target.dataset.index);
-			boardControl.placeMarker(squareIndex, getPlayerMark());
-			checkWin();
+			checkWin(squareIndex);
 			round++;
 			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 		}
 	}
-
-	const squares = document.querySelectorAll(".play-square");
-	squares.forEach((square) => addEventListener("click", playRound));
 
 	return { newGame, getPlayerMark, checkWin };
 })();
