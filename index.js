@@ -57,6 +57,7 @@ const gameControl = (() => {
 	let player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
 	let gameOn;
 	let round;
+
 	function newGame(e) {
 		// Swap player vars based on selection optioins
 
@@ -88,15 +89,18 @@ const gameControl = (() => {
 			[0, 4, 8],
 			[2, 4, 6],
 		];
-		// Filters to check if any of winConditions are satisfied by current marker
-		return winConditions
-			.filter((combination) => combination.includes(squareIndex))
-			.some((possibleCombination) =>
-				possibleCombination.every(
+		for (let i = 0; i < winConditions.length; i++) {
+			if (
+				winConditions[i].every(
 					(index) => boardControl.getSquareIndex(index) === getPlayerMark()
 				)
-			);
+			) {
+				return winConditions[i];
+			}
+		}
 	}
+
+	function endGame() {} // NEED TO FINISH END GAME LOGIC
 
 	function getPlayerMark() {
 		return round % 2 === 0 ? player2.mark : player1.mark;
@@ -113,7 +117,10 @@ const gameControl = (() => {
 		) {
 			const squareIndex = parseInt(e.target.dataset.index);
 			boardControl.placeMarker(squareIndex, getPlayerMark());
-			checkWin(squareIndex);
+			if (checkWin(squareIndex) != undefined) {
+				winningSquares = checkWin(squareIndex);
+				endGame(winningSquares);
+			}
 			round++;
 			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 		}
