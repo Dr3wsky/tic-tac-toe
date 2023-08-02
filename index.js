@@ -1,12 +1,11 @@
-// DOM Access and Global Variable Assignment for func declarations
-const ele = document.querySelector(":root");
-const redColor = getComputedStyle(ele).getPropertyValue("--red");
-const greenColor = getComputedStyle(ele).getPropertyValue("--green");
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-// Data Structure and objects
-// Placeholders until make player factoriy and modules
+// To Do:
+// Add commands to remove winning animation
+// change game prompt when win
 
+// Data Structure and objects
+
+// Player factory to initialize game
 const Player = (id, mark) => {
 	this.id = id;
 	this.mark = mark;
@@ -14,7 +13,7 @@ const Player = (id, mark) => {
 	return { id, mark };
 };
 
-// Game control methods and main logic
+// Board control to updated gameboard
 const boardControl = (() => {
 	const boardStatus = ["", "", "", "", "", "", "", "", ""];
 
@@ -31,9 +30,17 @@ const boardControl = (() => {
 		return boardStatus.join("") === "";
 	};
 
-	const clear = () => {
+	const clear = (gameOn) => {
 		for (let i = 0; i < boardStatus.length; i++) {
 			boardStatus[i] = "";
+			const boardSquare = document.body.querySelector(
+				`.play-square[data-index="${i}"]`
+			);
+			boardSquare.classList.remove("win-square");
+			if (boardSquare.hasChildNodes() && !gameOn) {
+				boardSquare.firstChild.classList.add("lose-mark");
+				// boardSquare.firstChild.classList.remove("win-mark");
+			}
 		}
 		update(boardStatus);
 	};
@@ -51,6 +58,7 @@ const boardControl = (() => {
 	return { clear, placeMarker, getSquareIndex, checkEmpty };
 })();
 
+// Game control for main logic methods
 const gameControl = (() => {
 	// Initialize player vars
 	let player1 = Player(1, '<i class="bx bx-x"></i>');
@@ -68,12 +76,12 @@ const gameControl = (() => {
 			player1 = Player(1, '<i class="bx bx-x"></i>');
 			player2 = Player(2, '<i class="bx bx-radio-circle"></i>');
 		}
-		displayControl.closeModal();
-		boardControl.clear();
 		round = 1;
 		gameOn = true;
+		displayControl.closeModal();
+		boardControl.clear(gameOn);
 		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
-		let squares = document.querySelectorAll(".play-square");
+		const squares = document.querySelectorAll(".play-square");
 		squares.forEach((square) => addEventListener("click", playRound, true));
 	}
 
@@ -100,7 +108,20 @@ const gameControl = (() => {
 		}
 	}
 
-	function endGame() {} // NEED TO FINISH END GAME LOGIC
+	function endGame(winningSquares) {
+		gameOn = false;
+		const allSquares = document.querySelectorAll(".play-square");
+		for (let i = 0; i < allSquares.length; i++) {
+			if (winningSquares.includes(i)) {
+				allSquares[i].classList.add("win-square");
+				allSquares[i].firstChild.classList.add("win-mark");
+			} else {
+				if (allSquares[i].hasChildNodes()) {
+					allSquares[i].firstChild.classList.add("lose-mark");
+				}
+			}
+		}
+	} // NEED TO FINISH END GAME LOGIC
 
 	function getPlayerMark() {
 		return round % 2 === 0 ? player2.mark : player1.mark;
@@ -129,7 +150,7 @@ const gameControl = (() => {
 	return { newGame, getPlayerMark, checkWin };
 })();
 
-// Display UI and event listeners
+// Display control to change UI
 const displayControl = (() => {
 	//UI items
 	const replayBtn = document.getElementById("replay");

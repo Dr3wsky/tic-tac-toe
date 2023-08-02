@@ -170,6 +170,23 @@ span {
 	font-weight: 900;
 }
 
+i {
+	transition: transform 0.3s ease-in-out;
+}
+
+.win-square {
+	background-color: var(--green);
+}
+
+.lose-mark {
+	color: var(--dark-grey);
+	transform: scale(0.75);
+}
+
+.win-mark {
+	transform: scale(1.5);
+}
+
 /* Change When implement readStatus Default is reb bg, then apply .read */
 
 /* FOOTER */
