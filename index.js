@@ -36,6 +36,8 @@ const boardControl = (() => {
 			const boardSquare = document.body.querySelector(
 				`.play-square[data-index="${i}"]`
 			);
+			boardSquare.classList.remove("x-color");
+			boardSquare.classList.remove("o-color");
 			boardSquare.classList.remove("win-square");
 		}
 		update(boardStatus);
@@ -48,9 +50,9 @@ const boardControl = (() => {
 			`.play-square[data-index="${index}"]`
 		);
 		if (marker == '<i class="bx bx-x"></i>') {
-			boardMark.classList.add("x-colour");
+			boardMark.classList.add("x-color");
 		} else {
-			boardMark.classList.add("o-colour");
+			boardMark.classList.add("o-color");
 		}
 	};
 
@@ -125,7 +127,15 @@ const gameControl = (() => {
 				}
 			}
 		}
-	} // NEED TO FINISH END GAME LOGIC
+	}
+
+	function catsGame() {
+		gameOn = false;
+		const allSquares = document.querySelectorAll(".play-square");
+		for (let i = 0; i < allSquares.length; i++) {
+			allSquares[i].classList.add("win-square");
+		}
+	}
 
 	function getPlayerMark() {
 		return round % 2 === 0 ? player2.mark : player1.mark;
@@ -143,14 +153,24 @@ const gameControl = (() => {
 		) {
 			const squareIndex = parseInt(e.target.dataset.index);
 			boardControl.placeMarker(squareIndex, getPlayerMark());
+			// Chack winning or cats game conditions
 			if (checkWin(squareIndex) != undefined) {
 				winningSquares = checkWin(squareIndex);
 				endGame(winningSquares);
 			}
-			round++;
-			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
+			if (round === 9) {
+				catsGame(round);
+			}
+			if (gameOn) {
+				round++;
+			}
+			displayControl.updatePrompt(
+				getPlayerId(),
+				getPlayerMark(),
+				gameOn,
+				round
+			);
 		}
-		displayControl.updatePrompt(getPlayerId(), getPlayerMark(), gameOn);
 	}
 
 	return { newGame, getPlayerMark, checkWin };
@@ -165,11 +185,15 @@ const displayControl = (() => {
 	const replayModal = document.getElementById("replay-modal");
 	const overlay = document.querySelector(".overlay");
 
-	function updatePrompt(id, mark, gameOn) {
+	function updatePrompt(id, mark, gameOn, round) {
 		const prompt = document.getElementById("prompt");
-		prompt.innerHTML = gameOn
-			? `Player ${id}'s turn.<br />Place an <span>${mark}</span>`
-			: `<span>Player ${id} WINS !!! </span><br />Press replay to start again`;
+		if (!gameOn && round === 9) {
+			prompt.innerHTML = `<span>CAT's GAME</span><br />Press replay to start again`;
+		} else if (!gameOn) {
+			prompt.innerHTML = `<span>Player ${id} WINS !!! </span><br />Press replay to start again`;
+		} else {
+			prompt.innerHTML = `Player ${id}'s turn.<br />Place an <span>${mark}</span>`;
+		}
 	}
 
 	const replay = () => {
