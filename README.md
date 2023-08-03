@@ -5,8 +5,6 @@ This project is from the Odin Project's Full Stack JS Develloper [curriculum]([h
 
 **Live preview** of the project is [here](https://dr3wsky.github.io/tic-tac-toe/) :point_left:
 
-🔗 **Live preview** of the project is [here](https://dr3wsky.github.io/library-app/) :point_left:
-
 ### Overview
 
 #### **Features:**
