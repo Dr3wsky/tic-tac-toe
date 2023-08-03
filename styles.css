@@ -18,7 +18,8 @@
 	--dark-green: rgb(50, 88, 40);
 	--red: rgb(240, 93, 93);
 	--dark-red: rgb(100, 29, 29);
-	--play-hover: var(--green);
+	--yellow: rgba(235, 221, 27, 0.973);
+	--play-hover: var(--dark-grey);
 	--header-shadow: var(--green) 0px 4px 6px;
 	--pop-shadow: rgba(0, 0, 0, 0.218) 4px 6px 4px;
 	--border-radius: 6px;
@@ -174,8 +175,16 @@ i {
 	transition: transform 0.3s ease-in-out;
 }
 
+.o-colour {
+	colour: var(--dark-green);
+}
+
+.x-colour {
+	color: var(--dark-red);
+}
+
 .win-square {
-	background-color: var(--green);
+	background-color: var(--yellow);
 }
 
 .lose-mark {

@@ -37,10 +37,6 @@ const boardControl = (() => {
 				`.play-square[data-index="${i}"]`
 			);
 			boardSquare.classList.remove("win-square");
-			if (boardSquare.hasChildNodes() && !gameOn) {
-				boardSquare.firstChild.classList.add("lose-mark");
-				// boardSquare.firstChild.classList.remove("win-mark");
-			}
 		}
 		update(boardStatus);
 	};
@@ -48,6 +44,14 @@ const boardControl = (() => {
 	const placeMarker = (index, marker) => {
 		boardStatus[index] = marker;
 		update(boardStatus);
+		const boardMark = document.body.querySelector(
+			`.play-square[data-index="${index}"]`
+		);
+		if (marker == '<i class="bx bx-x"></i>') {
+			boardMark.classList.add("x-colour");
+		} else {
+			boardMark.classList.add("o-colour");
+		}
 	};
 
 	const getSquareIndex = (index) => {
@@ -80,7 +84,7 @@ const gameControl = (() => {
 		gameOn = true;
 		displayControl.closeModal();
 		boardControl.clear(gameOn);
-		displayControl.updatePrompt(getPlayerId(), getPlayerMark());
+		displayControl.updatePrompt(getPlayerId(), getPlayerMark(), gameOn);
 		const squares = document.querySelectorAll(".play-square");
 		squares.forEach((square) => addEventListener("click", playRound, true));
 	}
@@ -134,7 +138,8 @@ const gameControl = (() => {
 	function playRound(e) {
 		if (
 			e.target.classList[0] !== "bx" &&
-			e.target.classList[0] != "container"
+			e.target.classList[0] != "container" &&
+			gameOn
 		) {
 			const squareIndex = parseInt(e.target.dataset.index);
 			boardControl.placeMarker(squareIndex, getPlayerMark());
@@ -145,6 +150,7 @@ const gameControl = (() => {
 			round++;
 			displayControl.updatePrompt(getPlayerId(), getPlayerMark());
 		}
+		displayControl.updatePrompt(getPlayerId(), getPlayerMark(), gameOn);
 	}
 
 	return { newGame, getPlayerMark, checkWin };
@@ -159,9 +165,11 @@ const displayControl = (() => {
 	const replayModal = document.getElementById("replay-modal");
 	const overlay = document.querySelector(".overlay");
 
-	function updatePrompt(id, mark) {
+	function updatePrompt(id, mark, gameOn) {
 		const prompt = document.getElementById("prompt");
-		prompt.innerHTML = `Player ${id}'s turn.<br />Place an <span>${mark}</span>`;
+		prompt.innerHTML = gameOn
+			? `Player ${id}'s turn.<br />Place an <span>${mark}</span>`
+			: `<span>Player ${id} WINS !!! </span><br />Press replay to start again`;
 	}
 
 	const replay = () => {
