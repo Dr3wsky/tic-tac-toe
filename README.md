@@ -9,7 +9,7 @@ This project is from the Odin Project's Full Stack JS Develloper [curriculum]([h
 
 #### **Features:**
 
-- The ***Javascript*** script contains no global variables or code. All fuctionality and logic is contained within function modules or factories to track gameplay.
+- The ****Javascript**** script contains no global variables or code. All fuctionality and logic is contained within function modules or factories to track gameplay.
 - Event listeners handle user inputs to initialize game, and update game state.
 - *gameControl()* module tracks the game status and checks winning conditions.
 - *displayControl()* module updates UI based on the game state.
