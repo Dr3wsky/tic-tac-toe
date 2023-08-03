@@ -1,7 +1,7 @@
 # Tic-Tac-Toe
 
 A tic-tac-toe gamer built with **JavaScript**, **CSS** and **HTML**
-This project is from the Odin Project's Full Stack JS Develloper [curriculum]([https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe]).
+This project is from the Odin Project's Full Stack JS Develloper [urriculum](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe).
 
 **Live preview** of the project is [here](https://dr3wsky.github.io/tic-tac-toe/) :point_left:
 
